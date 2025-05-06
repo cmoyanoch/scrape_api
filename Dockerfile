@@ -1,5 +1,8 @@
 FROM node:18-slim
 
+# Evitar prompts interactivos
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Instalar dependencias del sistema necesarias para Chromium
 RUN apt-get update && apt-get install -y \
     wget \
