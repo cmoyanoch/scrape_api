@@ -1,8 +1,8 @@
-FROM node:18-slim
+FROM node:18
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Instala solo las dependencias necesarias y disponibles
+# Instalación de dependencias necesarias (para puppeteer, imagen, chromium, etc.)
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     fonts-liberation \
