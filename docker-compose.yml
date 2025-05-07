@@ -4,6 +4,9 @@ services:
     container_name: scraper-api
     ports:
       - "3000:3000"
+    volumes:
+      - .:/app  
     cap_add:
       - SYS_ADMIN
     restart: unless-stopped
+    network_mode: host  # usa red del host para evitar DNS/firewall
