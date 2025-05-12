@@ -1,11 +1,9 @@
 FROM node:18-slim
 
-# Arreglar DNS temporalmente (para entornos con problemas)
-RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema para Chromium
 RUN apt-get update && apt-get install -y \
     wget \
+    curl \
     ca-certificates \
     fonts-liberation \
     libappindicator3-1 \
@@ -31,13 +29,20 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Crear directorio de trabajo
 WORKDIR /app
 
+# Copiar package.json y package-lock.json
 COPY package*.json ./
+
+# Instalar Puppeteer (trae Chromium automáticamente)
 RUN npm install
 
-COPY index.js ./
+# Copiar el resto del código
+COPY . .
 
+# Expone el puerto (opcional si usas network_mode: host)
 EXPOSE 3000
 
+# Comando para ejecutar tu app
 CMD ["node", "index.js"]
